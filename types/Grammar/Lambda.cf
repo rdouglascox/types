@@ -1,0 +1,24 @@
+-- here's our syntax for terms 
+Variable.     Term  ::= Var                                   ;
+Application.  Term  ::= "(" Term Term ")"                     ;
+Abstraction.  Term  ::= "\\" Var ":" Type "." Term             ;
+Fst.          Term  ::= "fst" Term                            ; 
+Snd.          Term  ::= "snd" Term                            ;
+Inl.          Term  ::= "inl" Term "as" Type                  ;
+Inr.          Term  ::= "inr" Term "as" Type                  ;
+Case.         Term  ::= "case" Term "of" Term "|" Term        ;
+Abort.        Term  ::= "abort" Type Term                     ;
+
+-- here's our syntax for types
+A.    Type        ::= "A"              ;
+B.    Type        ::= "B"              ;
+C.    Type        ::= "C"              ;
+T.    Type        ::= "T"              ;
+E.    Type        ::= "E"              ;
+Bot.  Type        ::= "Bot"            ;
+Func.             Type   ::= "(" Type "->" Type ")"       ;
+Sum.              Type   ::= "(" Type "+" Type ")"        ;
+Product.          Type   ::= "(" Type "*" Type ")"        ;
+
+-- here are our tokens 
+token Var ["fghpqrsuvwxyz"];
