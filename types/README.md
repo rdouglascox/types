@@ -1,4 +1,4 @@
-# Fun with Curry-Howard 
+# Propositions as Types (For Philosophers)
 
 ## Introduction
 
@@ -10,7 +10,7 @@ When I say what we are going to implement a type-checker, I mean that we are goi
 
 These are two parts of what is known as the Curry-Howard correspondence. We have a correspondence here between types and propositions and between terms and proofs. The third part has to do with proof simplification, but set that aside for now. In a sense, in writing a type-checker we are doing something similar to what we would do if were writing a function for checking a natural deduction proof. A proof checker would check whether each part of a proof corresponded to a correct application of a rule for constructing a proof. In a natural deduction proof the tree structure is explicit and we often annotate the tree with rules justifying each step. When we have a term in a simply typed lambda calculus we don't have an explicit tree structure or rule annotations. The terms nonetheless carry such information. The cool thing about exploiting the correspondence to write proofs is that at the end of the day we can run or execute our proofs. 
 
-In the following we will mainly be concerned with an abstract syntactic representation of the terms of our extended Church-style simply typed lambda calculus. We nonetheless have a concrete syntax in mind, and, a little later, we will take up the issue of how to parse our concrete syntax and how to print to out concrete syntax. Let me briefly explain the concrete syntax, then the abstract syntax, and then relate these in a table. 
+In the following, we will mainly be concerned with an abstract syntactic representation of the terms of our extended Church-style simply typed lambda calculus. We nonetheless have a concrete syntax in mind, and, a little later, we will take up the issue of how to parse our concrete syntax and how to print to out concrete syntax. Let me briefly explain the concrete syntax, then the abstract syntax, and then relate these in a table. 
 
 ## Types
 

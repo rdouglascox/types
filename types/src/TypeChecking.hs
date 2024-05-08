@@ -3,6 +3,7 @@ module TypeChecking where
 import qualified Data.Map as Map
 
 import Abs
+import BussProofs (printbussproof)
 import Parse
 import PrintingUnicode (printderivation1, printtype)
 
@@ -147,4 +148,9 @@ derive1 s = case mytermparser s of
  where
   mytermparser = parseterm
 
-test1 = derive1 "\\x:(A*B).{snd x,fst x}"
+derive2 :: String -> String
+derive2 s = case mytermparser s of
+  Right trm -> "\n" ++ printbussproof (derive (Derivation Map.empty trm Nothing Nothing []))
+  Left err -> "\nThe parser failed with the following error message: " ++ err
+ where
+  mytermparser = parseterm

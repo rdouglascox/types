@@ -42,7 +42,23 @@ data Rule
   | InrRule
   | CaseRule
   | AbortRule
-  deriving (Show, Eq)
+  deriving (Eq)
+
+instance Show Rule where
+  show x = case x of
+    VarRule -> "[Ax]"
+    AbsRule -> "[→I]"
+    AppRule -> "[→E]"
+    PairRule -> "[×I]"
+    FstRule -> "[×E₁]"
+    SndRule -> "[×E₂]"
+    InlRule -> "[+I₁]"
+    InrRule -> "[+I₂]"
+    CaseRule -> "[+E]"
+    AbortRule -> "[⊥ E]"
 
 data Derivation = Derivation Context Term (Maybe Type) (Maybe Rule) [Derivation]
+  deriving (Show)
+
+data DerivationErr = DerivationErr Context Term (Either String Type) (Maybe Rule) [DerivationErr]
   deriving (Show)

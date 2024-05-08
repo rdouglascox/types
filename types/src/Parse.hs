@@ -139,7 +139,8 @@ ptype =
 pbase :: Parser Type
 pbase =
   try
-    (Base A <$ atype)
+    (Bot <$ bottype)
+    <|> try (Base A <$ atype)
     <|> try
       (Base B <$ btype)
     <|> try
@@ -149,7 +150,6 @@ pbase =
     <|> try
       (Base E <$ etype)
     <|> try (Base T <$ ttype)
-    <|> try (Bot <$ bottype)
 
 psum :: Parser Type
 psum = Sum <$> ptype <* plus <*> ptype
@@ -206,11 +206,11 @@ psnd = Snd <$ sndsymb <*> pterm
 
 -- parse inl
 pinl :: Parser Term
-pinl = Inl <$ inl <*> pterm <* as <*> ptype
+pinl = Inl <$ inl <*> pterm <* sc <* as <*> ptype
 
 -- parse inr
 pinr :: Parser Term
-pinr = Inr <$ inr <*> pterm <* as <*> ptype
+pinr = Inr <$ inr <*> pterm <* sc <* as <*> ptype
 
 -- parse case
 pcase :: Parser Term

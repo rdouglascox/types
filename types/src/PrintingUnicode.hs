@@ -42,13 +42,13 @@ printterm :: Term -> String
 printterm trm = case trm of
   App trm1 trm2 -> "(" ++ printterm trm1 ++ " " ++ printterm trm2 ++ ")"
   Abs var1 typ1 trm1 -> "λ" ++ printvarsym var1 ++ ":" ++ printtype typ1 ++ "." ++ printterm trm1
-  Pair trm1 trm2 -> "{" ++ printterm trm1 ++ ":" ++ printterm trm2 ++ "}"
-  Snd trm1 -> "snd " ++ printterm trm1
-  Fst trm1 -> "fst " ++ printterm trm1
-  Inl trm1 typ -> "inl " ++ printterm trm1 ++ " as " ++ printtype typ
-  Inr trm1 typ -> "inr " ++ printterm trm1 ++ " as " ++ printtype typ
-  Case trm1 trm2 trm3 -> "case " ++ printterm trm1 ++ " of " ++ printterm trm2 ++ " | " ++ printterm trm3
-  Abort typ trm1 -> "abort" ++ printterm trm1 ++ printtype typ
+  Pair trm1 trm2 -> "{" ++ printterm trm1 ++ "," ++ printterm trm2 ++ "}"
+  Snd trm1 -> "(" ++ "snd " ++ printterm trm1 ++ ")"
+  Fst trm1 -> "(" ++ "fst " ++ printterm trm1 ++ ")"
+  Inl trm1 typ -> "(" ++ "inl " ++ printterm trm1 ++ " as " ++ printtype typ ++ ")"
+  Inr trm1 typ -> "(" ++ "inr " ++ printterm trm1 ++ " as " ++ printtype typ ++ ")"
+  Case trm1 trm2 trm3 -> "(" ++ "case " ++ printterm trm1 ++ " of " ++ printterm trm2 ++ " | " ++ printterm trm3 ++ ")"
+  Abort typ trm1 -> "(" ++ "abort" ++ printterm trm1 ++ printtype typ ++ ")"
   Var var -> printvarsym var
 
 printvarsym :: VarSym -> String

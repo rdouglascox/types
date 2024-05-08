@@ -1,0 +1,105 @@
+% let's inser a standard preamble for a LaTeX document in landscape mode
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{bussproofs}
+
+\begin{document}
+\begin{prooftree} 
+\AxiomC{$\Gamma$, x:(A$\times$B) $\vdash$ x:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ (fst x):A}
+\AxiomC{$\Gamma$, x:(A$\times$B) $\vdash$ x:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ (snd x):B}
+\BinaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ \{(snd x),(fst x)\}:(B$\times$A)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:(A$\times$B).\{(snd x),(fst x)\}:((A$\times$B)$\to$(B$\times$A))}
+\end{prooftree}
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x:A $\vdash$ x:A}
+\UnaryInfC{$\Gamma$, x:A $\vdash$ (abortxA):A}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:A.(abortxA):(A$\to$A)}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x:A, y:B $\vdash$ x:A}
+\UnaryInfC{$\Gamma$, x:A $\vdash$ $\lambda$y:B.x:(B$\to$A)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:A.$\lambda$y:B.x:(A$\to$(B$\to$A))}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x3:B}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x2:A}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x1:(A$\to$(B$\to$C))}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ (x1 x2):(B$\to$C)}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ ((x1 x2) x3):C}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x3:B $\vdash$ $\lambda$x2:A.((x1 x2) x3):(A$\to$C)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x3:B.$\lambda$x2:A.((x1 x2) x3):(B$\to$(A$\to$C))}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x3:B.$\lambda$x2:A.((x1 x2) x3):((A$\to$(B$\to$C))$\to$(B$\to$(A$\to$C)))}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (snd x4):B}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (fst x4):A}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x1:(A$\to$(B$\to$C))}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (x1 (fst x4)):(B$\to$C)}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ ((x1 (fst x4)) (snd x4)):C}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\times$B)$\to$C)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\to$(B$\to$C))$\to$((A$\times$B)$\to$C))}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x4:(B$\times$A)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (fst x4):B}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x4:(B$\times$A)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (snd x4):A}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x1:(A$\to$(B$\to$C))}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (x1 (snd x4)):(B$\to$C)}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ ((x1 (snd x4)) (fst x4)):C}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x4:(B$\times$A).((x1 (snd x4)) (fst x4)):((B$\times$A)$\to$C)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x4:(B$\times$A).((x1 (snd x4)) (fst x4)):((A$\to$(B$\to$C))$\to$((B$\times$A)$\to$C))}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (snd x4):B}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (fst x4):A}
+\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x1:(A$\to$(B$\to$C))}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (x1 (fst x4)):(B$\to$C)}
+\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ ((x1 (fst x4)) (snd x4)):C}
+\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\times$B)$\to$C)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\to$(B$\to$C))$\to$((A$\times$B)$\to$C))}
+\end{prooftree}
+
+
+\begin{prooftree}  
+\AxiomC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ x:A}
+\AxiomC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ y:(A$\to$$\bot$)}
+\BinaryInfC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ (y x):$\bot$}
+\UnaryInfC{$\Gamma$, x:A $\vdash$ $\lambda$y:(A$\to$$\bot$).(y x):((A$\to$$\bot$)$\to$$\bot$)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:A.$\lambda$y:(A$\to$$\bot$).(y x):(A$\to$((A$\to$$\bot$)$\to$$\bot$))}
+\end{prooftree}
+
+\begin{prooftree} 
+\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
+\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd x1):(B$\times$C)}
+\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd (snd x1)):C}
+\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
+\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd x1):(B$\times$C)}
+\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (fst (snd x1)):B}
+\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
+\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (fst x1):A}
+\BinaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ \{(fst x1),(fst (snd x1))\}:(A$\times$B)}
+\BinaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ \{\{(fst x1),(fst (snd x1))\},(snd (snd x1))\}:((A$\times$B)$\times$C)}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\times$(B$\times$C)).\{\{(fst x1),(fst (snd x1))\},(snd (snd x1))\}:((A$\times$(B$\times$C))$\to$((A$\times$B)$\times$C))}
+\end{prooftree}
+
+
+
+\end{document}
