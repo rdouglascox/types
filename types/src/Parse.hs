@@ -149,7 +149,6 @@ pbase =
       (Base D <$ dtype)
     <|> try
       (Base E <$ etype)
-    <|> try (Base T <$ ttype)
 
 psum :: Parser Type
 psum = Sum <$> ptype <* plus <*> ptype

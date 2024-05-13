@@ -1,91 +1,74 @@
-% let's inser a standard preamble for a LaTeX document in landscape mode
 \documentclass{article}
-\usepackage[landscape]{geometry}
 \usepackage{bussproofs}
-
+\usepackage[landscape, margin=1cm]{geometry}
 \begin{document}
-\begin{prooftree} 
-\AxiomC{$\Gamma$, x:(A$\times$B) $\vdash$ x:(A$\times$B)}
-\UnaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ (fst x):A}
-\AxiomC{$\Gamma$, x:(A$\times$B) $\vdash$ x:(A$\times$B)}
-\UnaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ (snd x):B}
-\BinaryInfC{$\Gamma$, x:(A$\times$B) $\vdash$ \{(snd x),(fst x)\}:(B$\times$A)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:(A$\times$B).\{(snd x),(fst x)\}:((A$\times$B)$\to$(B$\times$A))}
-\end{prooftree}
+\noindent Here is a derivation of: $\lambda$\textit{x}:(A$\times$B).\{(snd \textit{x}),(fst \textit{x})\}:((A$\times$B)$\to$(B$\times$A))
+\begin{prooftree}\RightLabel{{\small Ax}}
+\AxiomC{$\Gamma$, \textit{x}:(A$\times$B) $\vdash$ \textit{x}:(A$\times$B)}
+\RightLabel{{\small $\times$Elim1}}
+\UnaryInfC{$\Gamma$, \textit{x}:(A$\times$B) $\vdash$ (fst \textit{x}):A}
+\RightLabel{{\small Ax}}
+\AxiomC{$\Gamma$, \textit{x}:(A$\times$B) $\vdash$ \textit{x}:(A$\times$B)}
+\RightLabel{{\small $\times$Elim2}}
+\UnaryInfC{$\Gamma$, \textit{x}:(A$\times$B) $\vdash$ (snd \textit{x}):B}
+\RightLabel{{\small $\times$Intro}}
+\BinaryInfC{$\Gamma$, \textit{x}:(A$\times$B) $\vdash$ \{(snd \textit{x}),(fst \textit{x})\}:(B$\times$A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$\textit{x}:(A$\times$B).\{(snd \textit{x}),(fst \textit{x})\}:((A$\times$B)$\to$(B$\times$A))}\end{prooftree}
+Here is the cooresponding natural deduction proof:
+\begin{prooftree}\RightLabel{{\small Ax}}
+\AxiomC{(A$\land$B)}
+\RightLabel{{\small $\land$Elim1}}
+\UnaryInfC{A}
+\RightLabel{{\small Ax}}
+\AxiomC{(A$\land$B)}
+\RightLabel{{\small $\land$Elim2}}
+\UnaryInfC{B}
+\RightLabel{{\small $\land$Intro}}
+\BinaryInfC{(B$\land$A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{((A$\land$B)$\to$(B$\land$A))}\end{prooftree}
 
-\vspace{2cm}
-\begin{prooftree}  
-\AxiomC{$\Gamma$, x:A, y:B $\vdash$ x:A}
-\UnaryInfC{$\Gamma$, x:A $\vdash$ $\lambda$y:B.x:(B$\to$A)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:A.$\lambda$y:B.x:(A$\to$(B$\to$A))}
-\end{prooftree}
+\hrule\vspace{1cm}
+\noindent Here is a derivation of: $\lambda$\textit{x}\textsubscript{1}:(A+B).(case \textit{x}\textsubscript{1} of $\lambda$\textit{x}\textsubscript{2}:A.(inr \textit{x}\textsubscript{2} as (B+A)) $\vert$ $\lambda$\textit{x}\textsubscript{3}:B.(inl \textit{x}\textsubscript{3} as (B+A))):((A+B)$\to$(B+A))
+\begin{prooftree}\RightLabel{{\small Ax}}
+\AxiomC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B), \textit{x}\textsubscript{3}:B $\vdash$ \textit{x}\textsubscript{3}:B}
+\RightLabel{{\small +Intro2}}
+\UnaryInfC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B), \textit{x}\textsubscript{3}:B $\vdash$ (inl \textit{x}\textsubscript{3} as (B+A)):(B+A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B) $\vdash$ $\lambda$\textit{x}\textsubscript{3}:B.(inl \textit{x}\textsubscript{3} as (B+A)):(B$\to$(B+A))}
+\RightLabel{{\small Ax}}
+\AxiomC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B), \textit{x}\textsubscript{2}:A $\vdash$ \textit{x}\textsubscript{2}:A}
+\RightLabel{{\small +Intro1}}
+\UnaryInfC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B), \textit{x}\textsubscript{2}:A $\vdash$ (inr \textit{x}\textsubscript{2} as (B+A)):(B+A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B) $\vdash$ $\lambda$\textit{x}\textsubscript{2}:A.(inr \textit{x}\textsubscript{2} as (B+A)):(A$\to$(B+A))}
+\RightLabel{{\small Ax}}
+\AxiomC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B) $\vdash$ \textit{x}\textsubscript{1}:(A+B)}
+\RightLabel{{\small +Elim}}
+\TrinaryInfC{$\Gamma$, \textit{x}\textsubscript{1}:(A+B) $\vdash$ (case \textit{x}\textsubscript{1} of $\lambda$\textit{x}\textsubscript{2}:A.(inr \textit{x}\textsubscript{2} as (B+A)) $\vert$ $\lambda$\textit{x}\textsubscript{3}:B.(inl \textit{x}\textsubscript{3} as (B+A))):(B+A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$\textit{x}\textsubscript{1}:(A+B).(case \textit{x}\textsubscript{1} of $\lambda$\textit{x}\textsubscript{2}:A.(inr \textit{x}\textsubscript{2} as (B+A)) $\vert$ $\lambda$\textit{x}\textsubscript{3}:B.(inl \textit{x}\textsubscript{3} as (B+A))):((A+B)$\to$(B+A))}\end{prooftree}
+Here is the cooresponding natural deduction proof:
+\begin{prooftree}\RightLabel{{\small Ax}}
+\AxiomC{B}
+\RightLabel{{\small $\lor$Intro2}}
+\UnaryInfC{(B$\lor$A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{(B$\to$(B$\lor$A))}
+\RightLabel{{\small Ax}}
+\AxiomC{A}
+\RightLabel{{\small $\lor$Intro1}}
+\UnaryInfC{(B$\lor$A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{(A$\to$(B$\lor$A))}
+\RightLabel{{\small Ax}}
+\AxiomC{(A$\lor$B)}
+\RightLabel{{\small $\lor$Elim}}
+\TrinaryInfC{(B$\lor$A)}
+\RightLabel{{\small $\to$Intro}}
+\UnaryInfC{((A$\lor$B)$\to$(B$\lor$A))}\end{prooftree}
 
-
-\vspace{2cm}
-\begin{prooftree}  
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x3:B}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x2:A}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ x1:(A$\to$(B$\to$C))}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ (x1 x2):(B$\to$C)}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x2:A, x3:B $\vdash$ ((x1 x2) x3):C}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x3:B $\vdash$ $\lambda$x2:A.((x1 x2) x3):(A$\to$C)}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x3:B.$\lambda$x2:A.((x1 x2) x3):(B$\to$(A$\to$C))}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x3:B.$\lambda$x2:A.((x1 x2) x3):((A$\to$(B$\to$C))$\to$(B$\to$(A$\to$C)))}
-\end{prooftree}
-
-
-\vspace{2cm}
-\begin{prooftree}  
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (snd x4):B}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x4:(A$\times$B)}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (fst x4):A}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ x1:(A$\to$(B$\to$C))}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ (x1 (fst x4)):(B$\to$C)}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(A$\times$B) $\vdash$ ((x1 (fst x4)) (snd x4)):C}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\times$B)$\to$C)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x4:(A$\times$B).((x1 (fst x4)) (snd x4)):((A$\to$(B$\to$C))$\to$((A$\times$B)$\to$C))}
-\end{prooftree}
-
-
-\vspace{2cm}
-\begin{prooftree}  
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x4:(B$\times$A)}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (fst x4):B}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x4:(B$\times$A)}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (snd x4):A}
-\AxiomC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ x1:(A$\to$(B$\to$C))}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ (x1 (snd x4)):(B$\to$C)}
-\BinaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)), x4:(B$\times$A) $\vdash$ ((x1 (snd x4)) (fst x4)):C}
-\UnaryInfC{$\Gamma$, x1:(A$\to$(B$\to$C)) $\vdash$ $\lambda$x4:(B$\times$A).((x1 (snd x4)) (fst x4)):((B$\times$A)$\to$C)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\to$(B$\to$C)).$\lambda$x4:(B$\times$A).((x1 (snd x4)) (fst x4)):((A$\to$(B$\to$C))$\to$((B$\times$A)$\to$C))}
-\end{prooftree}
-\vspace{2cm}
-
-\begin{prooftree}  
-\AxiomC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ x:A}
-\AxiomC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ y:(A$\to$$\bot$)}
-\BinaryInfC{$\Gamma$, x:A, y:(A$\to$$\bot$) $\vdash$ (y x):$\bot$}
-\UnaryInfC{$\Gamma$, x:A $\vdash$ $\lambda$y:(A$\to$$\bot$).(y x):((A$\to$$\bot$)$\to$$\bot$)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x:A.$\lambda$y:(A$\to$$\bot$).(y x):(A$\to$((A$\to$$\bot$)$\to$$\bot$))}
-\end{prooftree}
-
-
-\vspace{2cm}
-\begin{prooftree} 
-\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
-\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd x1):(B$\times$C)}
-\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd (snd x1)):C}
-\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
-\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (snd x1):(B$\times$C)}
-\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (fst (snd x1)):B}
-\AxiomC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ x1:(A$\times$(B$\times$C))}
-\UnaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ (fst x1):A}
-\BinaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ \{(fst x1),(fst (snd x1))\}:(A$\times$B)}
-\BinaryInfC{$\Gamma$, x1:(A$\times$(B$\times$C)) $\vdash$ \{\{(fst x1),(fst (snd x1))\},(snd (snd x1))\}:((A$\times$B)$\times$C)}
-\UnaryInfC{$\emptyset$ $\vdash$ $\lambda$x1:(A$\times$(B$\times$C)).\{\{(fst x1),(fst (snd x1))\},(snd (snd x1))\}:((A$\times$(B$\times$C))$\to$((A$\times$B)$\times$C))}
-\end{prooftree}
-
-
-
+\hrule\vspace{1cm}
 \end{document}
+

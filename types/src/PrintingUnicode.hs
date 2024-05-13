@@ -6,6 +6,19 @@ import qualified Data.Map as Map
 import Data.Maybe
 import Data.Tree
 
+printrule :: Rule -> String
+printrule r = case r of
+  VarRule -> "[Ax]"
+  AbsRule -> "[→I]"
+  AppRule -> "[→E]"
+  PairRule -> "[×I]"
+  FstRule -> "[×E₁]"
+  SndRule -> "[×E₂]"
+  InlRule -> "[+I₁]"
+  InrRule -> "[+I₂]"
+  CaseRule -> "[+E]"
+  AbortRule -> "[⊥ E]"
+
 -- printing functions
 
 printderivation1 :: Derivation -> String
@@ -17,7 +30,7 @@ printderivation (Derivation ctx trm mtyp mrule ds) = Node (printcontext ctx ++ "
 
 printmtmr :: Maybe Type -> Maybe Rule -> String
 printmtmr t r = case (t, r) of
-  (Just x, Just y) -> printtype x ++ ", " ++ show y
+  (Just x, Just y) -> printtype x ++ ", " ++ printrule y
   _ -> "error"
 
 printcontext :: Context -> String

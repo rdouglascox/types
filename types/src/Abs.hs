@@ -2,7 +2,7 @@ module Abs where
 
 import qualified Data.Map as Map
 
-data BaseType = A | B | C | D | E | T
+data BaseType = A | B | C | D | E
   deriving (Show, Eq)
 
 data Type
@@ -31,6 +31,9 @@ data Term
 
 type Context = Map.Map VarSym Type
 
+data Judgement = Judgement Context Term Type
+  deriving (Show)
+
 data Rule
   = VarRule
   | AbsRule
@@ -42,20 +45,7 @@ data Rule
   | InrRule
   | CaseRule
   | AbortRule
-  deriving (Eq)
-
-instance Show Rule where
-  show x = case x of
-    VarRule -> "[Ax]"
-    AbsRule -> "[→I]"
-    AppRule -> "[→E]"
-    PairRule -> "[×I]"
-    FstRule -> "[×E₁]"
-    SndRule -> "[×E₂]"
-    InlRule -> "[+I₁]"
-    InrRule -> "[+I₂]"
-    CaseRule -> "[+E]"
-    AbortRule -> "[⊥ E]"
+  deriving (Eq, Show)
 
 data Derivation = Derivation Context Term (Maybe Type) (Maybe Rule) [Derivation]
   deriving (Show)

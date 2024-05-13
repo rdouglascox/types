@@ -3,7 +3,8 @@ module TypeChecking where
 import qualified Data.Map as Map
 
 import Abs
-import BussProofs (printbussproof)
+import BussProofs (prettybussproofs, prettybussproofs1, printbussproof)
+import Data.Either
 import Parse
 import PrintingUnicode (printderivation1, printtype)
 
@@ -35,18 +36,20 @@ typecheck ctx intrm = case intrm of
     case typecheck ctx trm of
       Just (Prod _ typ2) -> Just typ2
       _ -> Nothing
-  Inl trm typ -> case typecheck ctx trm of
+  Inl trm (Sum typl typr) -> case typecheck ctx trm of
     Just typ1 ->
-      if typ == typ1
-        then Just typ
+      if typl == typ1
+        then Just (Sum typl typr)
         else Nothing
     _ -> Nothing
-  Inr trm typ -> case typecheck ctx trm of
+  Inl _ _ -> Nothing
+  Inr trm (Sum typl typr) -> case typecheck ctx trm of
     Just typ1 ->
-      if typ == typ1
-        then Just typ
+      if typr == typ1
+        then Just (Sum typl typr)
         else Nothing
     _ -> Nothing
+  Inr _ _ -> Nothing
   Case trm1 trm2 trm3 -> case (typecheck ctx trm1, typecheck ctx trm2, typecheck ctx trm3) of
     (Just (Sum typl typr), Just (Func intypl outtypl), Just (Func intypr outtypr)) ->
       if (typl == intypl) && (typr == intypr) && (outtypl == outtypr)
@@ -106,20 +109,20 @@ derive (Derivation ctx intrm _ _ _) = case intrm of
      in case typ of
           Just (Prod _ typ2) -> wrap (Just typ2) (Just SndRule) [d1]
           _ -> wrap Nothing Nothing [d1]
-  Inl trm typ ->
+  Inl trm (Sum typl typr) ->
     let (typx, d1) = td $ derive $ wd ctx trm
      in case typx of
           Just typ1 ->
-            if typ == typ1
-              then wrap (Just typ) (Just InlRule) [d1]
+            if typl == typ1
+              then wrap (Just (Sum typl typr)) (Just InlRule) [d1]
               else wrap Nothing Nothing [d1]
           _ -> wrap Nothing Nothing [d1]
-  Inr trm typ ->
+  Inr trm (Sum typl typr) ->
     let (typx, d1) = td $ derive $ wd ctx trm
      in case typx of
           Just typ1 ->
-            if typ == typ1
-              then wrap (Just typ) (Just InrRule) [d1]
+            if typr == typ1
+              then wrap (Just (Sum typl typr)) (Just InrRule) [d1]
               else wrap Nothing Nothing [d1]
           _ -> wrap Nothing Nothing [d1]
   Case trm1 trm2 trm3 ->
@@ -150,7 +153,15 @@ derive1 s = case mytermparser s of
 
 derive2 :: String -> String
 derive2 s = case mytermparser s of
-  Right trm -> "\n" ++ printbussproof (derive (Derivation Map.empty trm Nothing Nothing []))
+  Right trm -> "\n" ++ prettybussproofs (derive (Derivation Map.empty trm Nothing Nothing []))
   Left err -> "\nThe parser failed with the following error message: " ++ err
  where
   mytermparser = parseterm
+
+derive3 :: [String] -> String
+derive3 s =
+  let ts = snd $ partitionEithers $ fmap termparser s
+   in let ds = map (\x -> (derive (Derivation Map.empty x Nothing Nothing []))) ts
+       in prettybussproofs1 ds
+ where
+  termparser = parseterm
